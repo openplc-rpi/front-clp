@@ -2,7 +2,11 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+Use the follow command for new project: `npm init react-app my-app`
+
+Initial exemplo copied from: https://reactflow.dev/examples/interaction/drag-and-drop
+
+### Available Scripts
 
 In the project directory, you can run:
 
