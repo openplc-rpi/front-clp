@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+  Panel,
+} from '@xyflow/react';
 
 export default () => {
   const onDragStart = (event, nodeType) => {
@@ -24,7 +27,6 @@ export default () => {
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'end')} draggable>
         end
       </div>
-
     </aside>
   );
 };

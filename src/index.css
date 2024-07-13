@@ -41,6 +41,12 @@
   height: 100%;
 }
 
+.dndflow .dndnode.run {
+  border-color: #d04200;
+  background-color: chartreuse;
+}
+
+
 .dndflow .selectall {
   margin-top: 10px;
 }

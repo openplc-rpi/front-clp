@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import {
   ReactFlow,
   ReactFlowProvider,
@@ -8,6 +8,7 @@ import {
   useEdgesState,
   Controls,
   useReactFlow,
+  Panel,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
@@ -15,6 +16,7 @@ import Sidebar from './Sidebar';
 
 import './index.css';
 
+const flowKey = 'example-flow';
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
@@ -23,11 +25,44 @@ const DnDFlow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const { screenToFlowPosition } = useReactFlow();
+  const [rfInstance, setRfInstance] = useState(null);
+  const { setViewport } = useReactFlow();
+
+  console.log('text');
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge( {...params, animated: true}, eds)),
     [],
   );
+
+  const onSave = useCallback(() => {
+    if (rfInstance) {
+      const flow = rfInstance.toObject();
+      localStorage.setItem(flowKey, JSON.stringify(flow));
+      console.log(flow)
+    }
+  }, [rfInstance]);  
+
+  const onRun = useCallback(() => {
+    console.log('run');
+    const flow = rfInstance.toObject();
+    console.log(flow);
+  });  
+
+  const onRestore = useCallback(() => {
+    const restoreFlow = async () => {
+      const flow = JSON.parse(localStorage.getItem(flowKey));
+
+      if (flow) {
+        const { x = 0, y = 0, zoom = 1 } = flow.viewport;
+        setNodes(flow.nodes || []);
+        setEdges(flow.edges || []);
+        setViewport({ x, y, zoom });
+      }
+    };
+
+    restoreFlow();
+  }, [setNodes, setViewport]);  
 
   const onDragOver = useCallback((event) => {
     console.log('drag over');
@@ -110,9 +145,15 @@ const DnDFlow = () => {
           onConnect={onConnect}
           onDrop={onDrop}
           onDragOver={onDragOver}
+          onInit={setRfInstance}
           fitView
         >
           <Controls />
+          <Panel position="top-right">
+        <button onClick={onSave}>save</button>
+        <button onClick={onRestore}>restore</button>
+        <button onClick={onRun}>run</button>
+      </Panel>          
         </ReactFlow>
       </div>
       <Sidebar />
