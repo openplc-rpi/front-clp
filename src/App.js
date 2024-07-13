@@ -3,6 +3,7 @@ import {
   ReactFlow,
   ReactFlowProvider,
   addEdge,
+  Position,
   useNodesState,
   useEdgesState,
   Controls,
@@ -14,30 +15,22 @@ import Sidebar from './Sidebar';
 
 import './index.css';
 
-const initialNodes = [
-  {
-    id: '1',
-    type: 'input',
-    data: { label: 'input node' },
-    position: { x: 250, y: 5 },
-  },
-];
-
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
 const DnDFlow = () => {
   const reactFlowWrapper = useRef(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const { screenToFlowPosition } = useReactFlow();
 
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
+    (params) => setEdges((eds) => addEdge( {...params, animated: true}, eds)),
     [],
   );
 
   const onDragOver = useCallback((event) => {
+    console.log('drag over');
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
   }, []);
@@ -60,12 +53,46 @@ const DnDFlow = () => {
         x: event.clientX,
         y: event.clientY,
       });
-      const newNode = {
+
+      var newNode = {          
         id: getId(),
         type,
         position,
-        data: { label: `${type} node` },
+        data: { label: `${type}` },
       };
+
+      if (type == 'start'){
+        newNode['type'] = 'input';
+        newNode['style'] = {
+            borderRadius: '100%',
+            backgroundColor: '#fff',
+            width: 50,
+            height: 50,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          };
+        newNode['sourcePosition'] = Position.Bottom;
+      }else if (type == 'in-portA'){
+        newNode['type'] = 'selectorNode';
+        //newNode['sourcePosition'] = Position.Left;
+      }else if (type == 'end'){
+        newNode['type'] = 'output';
+        newNode['style'] = {
+            borderRadius: '100%',
+            backgroundColor: '#fff',
+            width: 50,
+            height: 50,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          };
+        newNode['sourcePosition'] = Position.Top;
+      }
+
+        
+
+      console.log(newNode);
 
       setNodes((nds) => nds.concat(newNode));
     },
