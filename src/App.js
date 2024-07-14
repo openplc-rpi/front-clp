@@ -10,11 +10,19 @@ import {
   useReactFlow,
   Panel,
 } from '@xyflow/react';
+
 import '@xyflow/react/dist/style.css';
-
 import Sidebar from './Sidebar';
-
+import TextNode from './TextNode';
+import StartNode from './StartNode';
+import DecisionNode from './DecisionNode';
 import './index.css';
+
+const nodeTypes = {
+  text: TextNode,
+  start: StartNode,
+  decision: DecisionNode,
+};
 
 const flowKey = 'example-flow';
 let id = 0;
@@ -27,8 +35,6 @@ const DnDFlow = () => {
   const { screenToFlowPosition } = useReactFlow();
   const [rfInstance, setRfInstance] = useState(null);
   const { setViewport } = useReactFlow();
-
-  console.log('text');
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge( {...params, animated: true}, eds)),
@@ -91,36 +97,30 @@ const DnDFlow = () => {
 
       var newNode = {          
         id: getId(),
-        type,
         position,
         data: { label: `${type}` },
       };
 
       if (type == 'start'){
-        newNode['type'] = 'input';
-        newNode['style'] = {
-            borderRadius: '100%',
-            backgroundColor: '#fff',
-            width: 50,
-            height: 50,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          };
-        newNode['sourcePosition'] = Position.Bottom;
+        newNode['type'] = 'start';
       }else if (type == 'in-portA'){
         newNode['type'] = 'selectorNode';
-        //newNode['sourcePosition'] = Position.Left;
+      }else if (type == 'decision'){
+        newNode['type'] = 'decision';
+        newNode['data'] = { text: '> 1.2v' };
       }else if (type == 'end'){
         newNode['type'] = 'output';
         newNode['style'] = {
             borderRadius: '100%',
-            backgroundColor: '#fff',
+            backgroundColor: '#eee',
+            color: '#222',
+            padding: 10,
             width: 50,
             height: 50,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            fontSize: 12,
           };
         newNode['sourcePosition'] = Position.Top;
       }
@@ -146,14 +146,15 @@ const DnDFlow = () => {
           onDrop={onDrop}
           onDragOver={onDragOver}
           onInit={setRfInstance}
+          nodeTypes={nodeTypes}
           fitView
         >
           <Controls />
           <Panel position="top-right">
-        <button onClick={onSave}>save</button>
-        <button onClick={onRestore}>restore</button>
-        <button onClick={onRun}>run</button>
-      </Panel>          
+            <button onClick={onSave}>save</button>
+            <button onClick={onRestore}>restore</button>
+            <button onClick={onRun}>run</button>
+          </Panel>          
         </ReactFlow>
       </div>
       <Sidebar />
