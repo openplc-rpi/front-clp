@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Position, NodeProps, Handle, useReactFlow, Node } from '@xyflow/react';
 
-function StartNode({ id, data }: NodeProps<Node<{ text: string }>>) {
+function EndNode({ id, data }: NodeProps<Node<{ text: string }>>) {
   const { updateNodeData } = useReactFlow();
 
   return (
@@ -20,12 +20,12 @@ function StartNode({ id, data }: NodeProps<Node<{ text: string }>>) {
         fontSize: 12,
       }}
     >
-    <div>Start</div>
-     <Handle type="source" position={Position.Right}/>
+    <div>End</div>
+     <Handle type="target" position={Position.Left}/>
     </div>
   );
 }
 
-export default memo(StartNode);
+export default memo(EndNode);
 
 

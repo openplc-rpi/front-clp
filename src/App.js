@@ -9,19 +9,24 @@ import {
   Controls,
   useReactFlow,
   Panel,
+  MarkerType,
 } from '@xyflow/react';
 
 import '@xyflow/react/dist/style.css';
 import Sidebar from './Sidebar';
-import TextNode from './TextNode';
+import InputNode from './InputNode';
 import StartNode from './StartNode';
 import DecisionNode from './DecisionNode';
+import OutputNode from './OutputNode';
+import EndNode from './EndNode';
 import './index.css';
 
 const nodeTypes = {
-  text: TextNode,
+  inport: InputNode,
   start: StartNode,
   decision: DecisionNode,
+  outport: OutputNode,
+  end: EndNode
 };
 
 const flowKey = 'example-flow';
@@ -37,7 +42,7 @@ const DnDFlow = () => {
   const { setViewport } = useReactFlow();
 
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge( {...params, animated: true}, eds)),
+    (params) => setEdges((eds) => addEdge({ ...params, animated: true, markerEnd: { type: MarkerType.ArrowClosed } }, eds)),
     [],
   );
 
@@ -47,13 +52,13 @@ const DnDFlow = () => {
       localStorage.setItem(flowKey, JSON.stringify(flow));
       console.log(flow)
     }
-  }, [rfInstance]);  
+  }, [rfInstance]);
 
   const onRun = useCallback(() => {
     console.log('run');
     const flow = rfInstance.toObject();
     console.log(flow);
-  });  
+  });
 
   const onRestore = useCallback(() => {
     const restoreFlow = async () => {
@@ -68,7 +73,7 @@ const DnDFlow = () => {
     };
 
     restoreFlow();
-  }, [setNodes, setViewport]);  
+  }, [setNodes, setViewport]);
 
   const onDragOver = useCallback((event) => {
     console.log('drag over');
@@ -95,39 +100,12 @@ const DnDFlow = () => {
         y: event.clientY,
       });
 
-      var newNode = {          
+      var newNode = {
         id: getId(),
+        type,
         position,
         data: { label: `${type}` },
       };
-
-      if (type == 'start'){
-        newNode['type'] = 'start';
-      }else if (type == 'in-portA'){
-        newNode['type'] = 'selectorNode';
-      }else if (type == 'decision'){
-        newNode['type'] = 'decision';
-        newNode['data'] = { text: '> 1.2v' };
-      }else if (type == 'end'){
-        newNode['type'] = 'output';
-        newNode['style'] = {
-            borderRadius: '100%',
-            backgroundColor: '#eee',
-            color: '#222',
-            padding: 10,
-            width: 50,
-            height: 50,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: 12,
-          };
-        newNode['sourcePosition'] = Position.Top;
-      }
-
-        
-
-      console.log(newNode);
 
       setNodes((nds) => nds.concat(newNode));
     },
@@ -154,7 +132,7 @@ const DnDFlow = () => {
             <button onClick={onSave}>save</button>
             <button onClick={onRestore}>restore</button>
             <button onClick={onRun}>run</button>
-          </Panel>          
+          </Panel>
         </ReactFlow>
       </div>
       <Sidebar />

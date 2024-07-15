@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Position, NodeProps, Handle, useReactFlow, Node } from '@xyflow/react';
 
-function DecisionNode({ id, data }: NodeProps<Node<{ text: string }>>) {
+function InputNode({ id, data }: NodeProps<Node<{ text: string }>>) {
   const { updateNodeData } = useReactFlow();
 
   return (
@@ -18,7 +18,7 @@ function DecisionNode({ id, data }: NodeProps<Node<{ text: string }>>) {
         justifyContent: 'center',
       }}
     >
-      <div><center>Decision</center></div>
+      <div><center>inPort</center></div>
       <center>
         <div style={{ marginTop: 5 }}>
           <input
@@ -34,6 +34,4 @@ function DecisionNode({ id, data }: NodeProps<Node<{ text: string }>>) {
   );
 }
 
-export default memo(DecisionNode);
-
-
+export default memo(InputNode);

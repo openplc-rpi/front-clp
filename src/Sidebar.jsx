@@ -15,14 +15,14 @@ export default () => {
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'start')} draggable>
         Start
       </div>
-      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'in-portA')} draggable>
-        in-portA
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'inport')} draggable>
+        inPort
       </div>
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'decision')} draggable>
         Decision
       </div>
-      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'out-portB')} draggable>
-      out-portB
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'outport')} draggable>
+      out-port
       </div>
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'end')} draggable>
         end
