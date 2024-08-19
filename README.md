@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Use the follow command for new project: `npm init react-app my-app`
 
-Initial exemplo copied from: https://reactflow.dev/examples/interaction/drag-and-drop
+Initial exemple copied from: https://reactflow.dev/examples/interaction/drag-and-drop
 
 ### Available Scripts
 
