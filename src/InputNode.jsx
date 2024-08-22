@@ -1,12 +1,32 @@
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { Position, NodeProps, Handle, useReactFlow, Node } from '@xyflow/react';
+
 
 function InputNode({ id, data }: NodeProps<Node<{ text: string }>>) {
   const { updateNodeData } = useReactFlow();
+  const [IoPorts, setIoPorts] = useState([]);
+
+  useEffect(() => {
+    fetch(process.env.REACT_APP_SERVER_ADDR+process.env.REACT_APP_GET_PORTS)
+    .then(response => response.json()) 
+    .then(data => {setIoPorts(data);})
+  }, []);
+
+  console.log(data)
+
+  var options = ""
+  var selected = ""
+  if ( IoPorts.length == 0 ) {
+    return;
+  } else {
+    options = IoPorts.in_ports.map((port) => (
+        <option selected={port === data.text} value={port} key={port}>{port}</option>
+    ));
+  }
 
   return (
     <div
-      style={{
+      style={{ 
         background: '#eee',
         color: '#222',
         padding: 10,
@@ -21,11 +41,9 @@ function InputNode({ id, data }: NodeProps<Node<{ text: string }>>) {
       <div><center>inPort</center></div>
       <center>
         <div style={{ marginTop: 5 }}>
-          <input
-            onChange={(evt) => updateNodeData(id, { text: evt.target.value })}
-            value={data.text}
-            style={{ display: 'block', width: 30, fontSize: 8 }}
-          />
+        <select id="input_ports" name="input_ports" onChange={(evt) => updateNodeData(id, { text: evt.target.value })}>
+          {options}
+        </select>          
         </div>
       </center>
       <Handle type="target" position={Position.Left}/>

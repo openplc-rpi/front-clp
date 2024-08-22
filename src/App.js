@@ -33,6 +33,7 @@ const flowKey = 'example-flow';
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
+
 const DnDFlow = () => {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -40,11 +41,14 @@ const DnDFlow = () => {
   const { screenToFlowPosition } = useReactFlow();
   const [rfInstance, setRfInstance] = useState(null);
   const { setViewport } = useReactFlow();
+  const [IOPorts, setIoPorts] = useState([]);
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge({ ...params, animated: true, markerEnd: { type: MarkerType.ArrowClosed } }, eds)),
     [],
   );
+
+  //console.log(IOPorts);
 
   const onSave = useCallback(() => {
     if (rfInstance) {
