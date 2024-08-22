@@ -12,10 +12,8 @@ function InputNode({ id, data }: NodeProps<Node<{ text: string }>>) {
     .then(data => {setIoPorts(data);})
   }, []);
 
-  console.log(data)
-
+  
   var options = ""
-  var selected = ""
   if ( IoPorts.length == 0 ) {
     return;
   } else {
