@@ -12,7 +12,7 @@ function DecisionNode({ id, data }: NodeProps<Node<{ text: string }>>) {
         padding: 10,
         fontSize: 8,
         borderRadius: '10%',
-        width: 80,
+        width: 90,
         height: 30,
         alignItems: 'center',
         justifyContent: 'center',
@@ -20,7 +20,15 @@ function DecisionNode({ id, data }: NodeProps<Node<{ text: string }>>) {
     >
       <div><center>Decision</center></div>
       <center>
-        <div style={{ marginTop: 5 }}>
+        <div style={{ marginTop: 5, display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <select id="compare_signal" name="compare_signal" style={{ display: 'block', width: 40, fontSize: 10 }} onChange={(evt) => updateNodeData(id, { signal: evt.target.value })}>
+            <option value="==">==</option>
+            <option value="!=">!=</option>
+            <option value=">">&gt;</option>
+            <option value="<">&lt;</option>
+            <option value=">=">&gt;=</option>
+            <option value="<=">&lt;=</option>
+          </select>             
           <input
             onChange={(evt) => updateNodeData(id, { text: evt.target.value })}
             value={data.text}
@@ -29,7 +37,8 @@ function DecisionNode({ id, data }: NodeProps<Node<{ text: string }>>) {
         </div>
       </center>
       <Handle type="target" position={Position.Left}/>
-      <Handle type="source" position={Position.Right}/>
+      <Handle id="true" type="source" position={Position.Right}  style={{ top: 10 }}/>
+      <Handle id="false" type="source" position={Position.Right} style={{ bottom: 5, top: 'auto'}}/>
     </div>
   );
 }
