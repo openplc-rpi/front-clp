@@ -18,7 +18,7 @@ function InputNode({ id, data }: NodeProps<Node<{ text: string }>>) {
     return;
   } else {
     options = IoPorts.in_ports.map((port) => (
-        <option selected={port === data.text} value={port} key={port}>{port}</option>
+        <option  value={port} key={port}>{port}</option>
     ));
   }
 
@@ -39,7 +39,7 @@ function InputNode({ id, data }: NodeProps<Node<{ text: string }>>) {
       <div><center>inPort</center></div>
       <center>
         <div style={{ marginTop: 5 }}>
-        <select id="input_ports" name="input_ports" onChange={(evt) => updateNodeData(id, { text: evt.target.value })}>
+        <select value={data.text} id="input_ports" name="input_ports" style={{ display: 'block', width: 50, fontSize: 10 }} onChange={(evt) => updateNodeData(id, { text: evt.target.value })}>
           {options}
         </select>          
         </div>
