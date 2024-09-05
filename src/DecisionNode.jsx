@@ -21,7 +21,7 @@ function DecisionNode({ id, data }: NodeProps<Node<{ text: string }>>) {
       <div><center>Decision</center></div>
       <center>
         <div style={{ marginTop: 5, display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <select id="compare_signal" name="compare_signal" style={{ display: 'block', width: 40, fontSize: 10 }} onChange={(evt) => updateNodeData(id, { signal: evt.target.value })}>
+          <select id="compare_signal" value={data.signal} name="compare_signal" style={{ display: 'block', width: 40, fontSize: 10 }} onChange={(evt) => updateNodeData(id, { signal: evt.target.value })}>
             <option value="==">==</option>
             <option value="!=">!=</option>
             <option value=">">&gt;</option>
