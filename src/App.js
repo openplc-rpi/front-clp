@@ -62,6 +62,12 @@ const DnDFlow = () => {
     console.log(flow);
   });
 
+  const onClear = useCallback(() => {
+    setNodes([]);
+    setEdges([]);
+  });
+
+
   const onRestore = useCallback(() => {
     const restoreFlow = async () => {
       const flow = JSON.parse(localStorage.getItem(flowKey));
@@ -133,6 +139,7 @@ const DnDFlow = () => {
         >
           <Controls />
           <Panel position="top-right">
+            <button onClick={onClear}>clear</button>
             <button onClick={onSave}>save</button>
             <button onClick={onRestore}>restore</button>
             <button onClick={onRun}>run</button>
