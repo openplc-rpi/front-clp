@@ -48,8 +48,6 @@ const DnDFlow = () => {
     [],
   );
 
-  //console.log(IOPorts);
-
   const onSave = useCallback(() => {
     if (rfInstance) {
       const flow = rfInstance.toObject();
@@ -83,7 +81,6 @@ const DnDFlow = () => {
   }, [setNodes, setViewport]);
 
   const onDragOver = useCallback((event) => {
-    console.log('drag over');
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
   }, []);
