@@ -17,6 +17,7 @@ import Sidebar from './Sidebar';
 import InputNode from './InputNode';
 import StartNode from './StartNode';
 import DecisionNode from './DecisionNode';
+import Operation from './Operation';
 import OutputNode from './OutputNode';
 import EndNode from './EndNode';
 import './index.css';
@@ -25,6 +26,7 @@ const nodeTypes = {
   inport: InputNode,
   start: StartNode,
   decision: DecisionNode,
+  operation: Operation,
   outport: OutputNode,
   end: EndNode
 };
@@ -41,7 +43,7 @@ const DnDFlow = () => {
   const { screenToFlowPosition } = useReactFlow();
   const [rfInstance, setRfInstance] = useState(null);
   const { setViewport } = useReactFlow();
-  const [IOPorts, setIoPorts] = useState([]);
+  const { getNodes, getEdges } = useReactFlow();
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge({ ...params, animated: true, markerEnd: { type: MarkerType.ArrowClosed } }, eds)),
@@ -101,6 +103,19 @@ const DnDFlow = () => {
       if (typeof type === 'undefined' || !type) {
         return;
       }
+
+      var flag = false;
+      getNodes().forEach(n => {
+        if (n.type === type &&  (type === 'start' || type === 'end')) {
+          flag = true;
+        }
+      })
+
+      if (flag) {
+        return;
+      }
+
+      console.log('return 1')
 
       // project was renamed to screenToFlowPosition
       // and you don't need to subtract the reactFlowBounds.left/top anymore

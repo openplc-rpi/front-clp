@@ -21,6 +21,9 @@ export default () => {
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'decision')} draggable>
         Decision
       </div>
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'operation')} draggable>
+        Operation
+      </div>
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'outport')} draggable>
       out-port
       </div>
