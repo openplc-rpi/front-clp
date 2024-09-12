@@ -44,8 +44,8 @@ function OutputNode({ id, data }: NodeProps<Node<{ text: string }>>) {
         </select>          
         </div>
       </center>
-      <Handle type="target" position={Position.Left}/>
-      <Handle type="source" position={Position.Right}/>
+      <Handle type="target" position={Position.Left} style={{ backgroundColor: 'yellow'}}/>
+      <Handle type="source" position={Position.Right} style={{ backgroundColor: 'blue'}}/>
     </div>
   );
 }

@@ -9,8 +9,8 @@ function StartNode({ id, data }: NodeProps<Node<{ text: string }>>) {
       style={{
         borderRadius: '100%',
         backgroundColor: '#fff',
-        width: 45,
-        height: 45,
+        width: 40,
+        height: 40,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -21,7 +21,7 @@ function StartNode({ id, data }: NodeProps<Node<{ text: string }>>) {
       }}
     >
     <div>Start</div>
-     <Handle type="source" position={Position.Right}/>
+     <Handle type="source" position={Position.Right} style={{backgroundColor: 'blue'}}/>
     </div>
   );
 }

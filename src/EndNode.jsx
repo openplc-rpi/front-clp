@@ -9,8 +9,8 @@ function EndNode({ id, data }: NodeProps<Node<{ text: string }>>) {
       style={{
         borderRadius: '100%',
         backgroundColor: '#fff',
-        width: 45,
-        height: 45,
+        width: 40,
+        height: 40,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -21,7 +21,7 @@ function EndNode({ id, data }: NodeProps<Node<{ text: string }>>) {
       }}
     >
     <div>End</div>
-     <Handle type="target" position={Position.Left}/>
+     <Handle type="target" position={Position.Left} style={{ backgroundColor: 'yellow'}}/>
     </div>
   );
 }

@@ -1,13 +1,26 @@
 import React from 'react';
+import './styles.css';
 import {
   Panel,
 } from '@xyflow/react';
+
+
+  const circles = [
+    { color: 'yellow', label: 'Sinal de Entrada' },
+    { color: 'blue', label: 'Sinal de Saída' },
+    { color: 'green', label: 'Ativo se Verdadeiro' },
+    { color: 'red', label: 'Ativo se Falso' }
+  ];
+
+
+
 
 export default () => {
   const onDragStart = (event, nodeType) => {
     event.dataTransfer.setData('application/reactflow', nodeType);
     event.dataTransfer.effectAllowed = 'move';
   };
+
 
   return (
     <aside>
@@ -30,6 +43,20 @@ export default () => {
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'end')} draggable>
         end
       </div>
-    </aside>
+      <div className="square">
+        <h3 className="title">Legenda</h3>
+        <div className="circle-grid">
+          {circles.map((circle, index) => (
+            <div key={index} className="circle-container">
+              <div
+                className="circle"
+                style={{ backgroundColor: circle.color }}
+              ></div>
+              <span className="label">{circle.label}</span>
+            </div>
+          ))}
+      </div>      
+    </div>
+  </aside>
   );
 };

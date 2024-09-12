@@ -36,7 +36,7 @@ function DecisionNode({ id, data }: NodeProps<Node<{ text: string }>>) {
           />
         </div>
       </center>
-      <Handle type="target" position={Position.Left}/>
+      <Handle type="target" position={Position.Left} style={{ backgroundColor: 'yellow'}}/>
       <Handle id="true" type="source" position={Position.Right}  style={{ top: 10, backgroundColor: 'green'}}/>
       <Handle id="false" type="source" position={Position.Right} style={{ bottom: 5, top: 'auto', backgroundColor: 'red'}}/>
     </div>

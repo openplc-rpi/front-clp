@@ -35,8 +35,8 @@ function Operation({ id, data }: NodeProps<Node<{ text: string }>>) {
           />
         </div>
       </center>
-      <Handle type="target" position={Position.Left}/>
-      <Handle id="out" type="source" position={Position.Right}/>
+      <Handle type="target" position={Position.Left} style={{ backgroundColor: 'yellow'}}/>
+      <Handle id="out" type="source" position={Position.Right} style={{ backgroundColor: 'blue'}}/>
     </div>
   );
 }

@@ -6,3 +6,47 @@ html, body, #root {
   box-sizing: border-box;
   font-family: sans-serif;
 }
+
+.square {
+  width: 250px;
+  height: 200px;
+  border: 2px solid #000;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.circle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5px;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-bottom: 5px;
+}
+
+.label {
+  font-size: 12px;
+  text-align: center;
+}
+
+.title {
+  position: relative;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.circle-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+}
