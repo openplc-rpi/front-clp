@@ -18,6 +18,7 @@ function EndNode({ id, data }: NodeProps<Node<{ text: string }>>) {
         color: '#222',
         padding: 10,
         fontSize: 12,
+        border: '1px solid #000',
       }}
     >
     <div>End</div>

@@ -34,6 +34,7 @@ function OutputNode({ id, data }: NodeProps<Node<{ text: string }>>) {
         height: 30,
         alignItems: 'center',
         justifyContent: 'center',
+        border: '1px solid #000',
       }}
     >
       <div><center>outPort</center></div>

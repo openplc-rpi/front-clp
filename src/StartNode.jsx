@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { Position, NodeProps, Handle, useReactFlow, Node } from '@xyflow/react';
+import './index.css';
 
 function StartNode({ id, data }: NodeProps<Node<{ text: string }>>) {
   const { updateNodeData } = useReactFlow();
@@ -18,6 +19,7 @@ function StartNode({ id, data }: NodeProps<Node<{ text: string }>>) {
         color: '#222',
         padding: 10,
         fontSize: 12,
+        border: '1px solid #000',
       }}
     >
     <div>Start</div>

@@ -10,7 +10,11 @@ import {
   useReactFlow,
   Panel,
   MarkerType,
-} from '@xyflow/react';
+  useOnSelectionChange,
+  } from '@xyflow/react';
+
+  
+
 
 import '@xyflow/react/dist/style.css';
 import Sidebar from './Sidebar';
@@ -44,6 +48,7 @@ const DnDFlow = () => {
   const [rfInstance, setRfInstance] = useState(null);
   const { setViewport } = useReactFlow();
   const { getNodes, getEdges } = useReactFlow();
+  //const setSelectedElements = useStoreActions((actions) => actions.setSelectedElements);
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge({ ...params, animated: true, markerEnd: { type: MarkerType.ArrowClosed } }, eds)),
@@ -115,8 +120,6 @@ const DnDFlow = () => {
         return;
       }
 
-      console.log('return 1')
-
       // project was renamed to screenToFlowPosition
       // and you don't need to subtract the reactFlowBounds.left/top anymore
       // details: https://reactflow.dev/whats-new/2023-11-10
@@ -136,6 +139,23 @@ const DnDFlow = () => {
     },
     [screenToFlowPosition],
   );
+
+  const onChange = useCallback(({ nodes, edges }) => {
+    //nodes.map((node) => ( node.styles = { border: '1px solid #000' }));
+    //setSelectedElements(nodes);
+    return nodes.map((node) => ({
+        ...node,
+        border: "2px solid #000",
+    })
+  );
+    //console.log(nodes.map((node) => node.id));
+    //console.log(edges.map((edge) => edge.id));
+  }, []);  
+
+  useOnSelectionChange({
+    onChange,
+  });
+
 
   return (
     <div className="dndflow">
