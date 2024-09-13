@@ -44,11 +44,9 @@ const DnDFlow = () => {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const { screenToFlowPosition } = useReactFlow();
+  const [selectedNodes, setSelectedNodes] = useState([]);
   const [rfInstance, setRfInstance] = useState(null);
-  const { setViewport } = useReactFlow();
-  const { getNodes, getEdges } = useReactFlow();
-  //const setSelectedElements = useStoreActions((actions) => actions.setSelectedElements);
+  const { setViewport, getNodes, deleteElements, screenToFlowPosition } = useReactFlow();
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge({ ...params, animated: true, markerEnd: { type: MarkerType.ArrowClosed } }, eds)),
@@ -74,6 +72,9 @@ const DnDFlow = () => {
     setEdges([]);
   });
 
+  const onDelete = useCallback(() => {
+    deleteElements({ nodes: selectedNodes });
+  });
 
   const onRestore = useCallback(() => {
     const restoreFlow = async () => {
@@ -109,6 +110,9 @@ const DnDFlow = () => {
         return;
       }
 
+      /* check if the dropped element is already in the graph.
+         It is allowed only one start and one end node. 
+      */
       var flag = false;
       getNodes().forEach(n => {
         if (n.type === type &&  (type === 'start' || type === 'end')) {
@@ -141,13 +145,9 @@ const DnDFlow = () => {
   );
 
   const onChange = useCallback(({ nodes, edges }) => {
-    //nodes.map((node) => ( node.styles = { border: '1px solid #000' }));
-    //setSelectedElements(nodes);
-    return nodes.map((node) => ({
-        ...node,
-        border: "2px solid #000",
-    })
-  );
+    setSelectedNodes(nodes);    
+
+    //deleteElements({ nodes: [{ id: "1" }] }
     //console.log(nodes.map((node) => node.id));
     //console.log(edges.map((edge) => edge.id));
   }, []);  
@@ -174,10 +174,12 @@ const DnDFlow = () => {
         >
           <Controls />
           <Panel position="top-right">
+            <button style={{ marginRight: '10px' }} onClick={onDelete}>delete</button>
             <button onClick={onClear}>clear</button>
             <button onClick={onSave}>save</button>
-            <button onClick={onRestore}>restore</button>
+            <button style={{ marginRight: '10px' }} onClick={onRestore}>restore</button>
             <button onClick={onRun}>run</button>
+
           </Panel>
         </ReactFlow>
       </div>
