@@ -50,3 +50,33 @@ html, body, #root {
   justify-content: space-around;
   width: 100%;
 }
+
+.listview {
+  background-color: white;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.listview .title {
+  margin-bottom: 10px;
+}
+
+.file-list {
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+.file-item {
+  cursor: pointer; /* Change cursor to pointer */
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e0e0; /* Optional: Add a separator */
+}
+
+.file-item:last-child {
+  border-bottom: none; /* Remove border from last item */
+}
+
+.file-item:hover {
+  background-color: #f9f9f9; /* Add hover effect */
+}
