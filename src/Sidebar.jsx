@@ -32,8 +32,8 @@ export default () => {
 
 
   const handleItemClick = (fileName) => {
-    // Replace this with your desired action
-    console.log(`Clicked on ${fileName}`);
+    const event = new CustomEvent('loadProject', {detail: fileName});
+    window.dispatchEvent(event);
   };
 
   return (

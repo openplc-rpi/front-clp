@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import {
   ReactFlow,
   ReactFlowProvider,
@@ -151,6 +151,36 @@ const DnDFlow = () => {
   useOnSelectionChange({
     onChange,
   });
+
+  useEffect(() => {
+    const handleUpdateEditorView = (event) => {
+
+      const params = new URLSearchParams({
+        project_name: event.detail,
+        
+      });
+
+      fetch(process.env.REACT_APP_SERVER_ADDR+process.env.REACT_APP_GET_PROJECTS+'?'+ params)
+        .then(response => response.json())
+        .then(data => {
+          if (data.status == 0) {
+            const { x = 0, y = 0, zoom = 1 } = data.file_content.viewport;
+            setNodes(data.file_content.nodes || []);
+            setEdges(data.file_content.edges || []);
+            setViewport({ x, y, zoom });
+            id = data.file_content.nodes.length;
+          }
+        }
+      );    
+  
+    };
+
+    window.addEventListener('loadProject', handleUpdateEditorView);
+  
+    return () => {
+      window.removeEventListener('loadProject', handleUpdateEditorView);
+    };
+  }, []);  
 
 
   return (
