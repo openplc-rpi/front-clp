@@ -111,7 +111,7 @@ const DnDFlow = () => {
       }
 
       /* check if the dropped element is already in the graph.
-         It is allowed only one start and one end node. 
+         It is allowed only one start and one end nodes
       */
       var flag = false;
       getNodes().forEach(n => {
@@ -146,10 +146,6 @@ const DnDFlow = () => {
 
   const onChange = useCallback(({ nodes, edges }) => {
     setSelectedNodes(nodes);    
-
-    //deleteElements({ nodes: [{ id: "1" }] }
-    //console.log(nodes.map((node) => node.id));
-    //console.log(edges.map((edge) => edge.id));
   }, []);  
 
   useOnSelectionChange({
