@@ -16,6 +16,7 @@ const circles = [
 
 
 export default () => {
+  const [selectedFile, setSelectedFile] = useState(null); 
   const [projects, setProjects] = useState([]);
 
   const onDragStart = (event, nodeType) => {
@@ -38,6 +39,7 @@ export default () => {
   const handleItemClick = (fileName) => {
     const event = new CustomEvent('loadProject', {detail: fileName});
     window.dispatchEvent(event);
+    setSelectedFile(fileName)
   };
 
   return (
@@ -87,7 +89,12 @@ export default () => {
         <h3 className="title">Projetos</h3>
         <ul className="file-list">
           {projects.map((file, index) => (
-            <li key={index} className='file-item' onClick={() => handleItemClick(file)}>{file}</li>
+            <li 
+              className={`file-item ${selectedFile === file ? 'selected' : ''}`}
+              key={index} 
+              onClick={() => handleItemClick(file)}>
+                {file}
+            </li>
           ))}
         </ul>
       </div>    

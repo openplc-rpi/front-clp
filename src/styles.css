@@ -80,3 +80,10 @@ html, body, #root {
 .file-item:hover {
   background-color: #f9f9f9; /* Add hover effect */
 }
+
+.file-item.selected {
+  background-color: #d3e2ff; /* Highlight color when selected */
+  font-weight: bold; /* Optional: Make text bold */
+  color: #000;
+}
+
