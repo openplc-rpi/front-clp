@@ -65,3 +65,25 @@
 .dndflow .selected {
   border: 2px solid gray !important;
 }
+
+.error-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 0, 0, 0.9); /* Transparent red */
+  color: white;
+  text-align: center;
+  padding: 10px;
+  z-index: 1000; /* Ensure it's above other elements */
+  animation: fadeOut 3s forwards; /* 3 seconds fade out */
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

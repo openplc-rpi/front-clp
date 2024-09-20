@@ -47,6 +47,16 @@ const DnDFlow = () => {
   const [selectedNodes, setSelectedNodes] = useState([]);
   const [rfInstance, setRfInstance] = useState(null);
   const { setViewport, getNodes, deleteElements, screenToFlowPosition } = useReactFlow();
+  const [error, setError] = useState("");
+
+  /*  Function to trigger an error.*/
+  const triggerError = (error_msg) => {
+    setError(error_msg);
+    setTimeout(() => {
+      setError("");
+    }, 10000); // Fade out after 5 seconds
+  };
+
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge({ ...params, animated: true, markerEnd: { type: MarkerType.ArrowClosed } }, eds)),
@@ -75,24 +85,6 @@ const DnDFlow = () => {
   const onDelete = useCallback(() => {
     deleteElements({ nodes: selectedNodes });
   });
-
-  const onRestore = useCallback(() => {
-    const restoreFlow = async () => {
-      const flow = JSON.parse(localStorage.getItem(flowKey));
-
-      if (flow) {
-        const { x = 0, y = 0, zoom = 1 } = flow.viewport;
-        setNodes(flow.nodes || []);
-        setEdges(flow.edges || []);
-        setViewport({ x, y, zoom });
-      }
-
-      id = flow.nodes.length;
-      
-    };
-
-    restoreFlow();
-  }, [setNodes, setViewport]);
 
   const onDragOver = useCallback((event) => {
     event.preventDefault();
@@ -169,10 +161,11 @@ const DnDFlow = () => {
             setEdges(data.file_content.edges || []);
             setViewport({ x, y, zoom });
             id = data.file_content.nodes.length;
+          }else{
+            triggerError(data.error_description);
           }
         }
       );    
-  
     };
 
     window.addEventListener('loadProject', handleUpdateEditorView);
@@ -185,6 +178,11 @@ const DnDFlow = () => {
 
   return (
     <div className="dndflow">
+      {error != "" && (
+        <div className="error-bar">
+          {error}
+        </div>
+      )}      
       <div className="reactflow-wrapper" ref={reactFlowWrapper}>
         <ReactFlow
           nodes={nodes}
@@ -202,8 +200,7 @@ const DnDFlow = () => {
           <Panel position="top-right">
             <button style={{ marginRight: '10px' }} onClick={onDelete}>delete</button>
             <button onClick={onClear}>clear</button>
-            <button onClick={onSave}>save</button>
-            <button style={{ marginRight: '10px' }} onClick={onRestore}>restore</button>
+            <button style={{ marginRight: '10px' }} onClick={onSave}>save</button>
             <button onClick={onRun}>run</button>
 
           </Panel>
