@@ -1,8 +1,7 @@
 import { memo } from 'react';
-import { Position, NodeProps, Handle, useReactFlow, Node } from '@xyflow/react';
+import { Position, NodeProps, Handle, Node } from '@xyflow/react';
 
 function EndNode({ id, data }: NodeProps<Node<{ text: string }>>) {
-  const { updateNodeData } = useReactFlow();
 
   return (
     <div

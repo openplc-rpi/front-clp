@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './styles.css';
-import {
-  Panel,
-} from '@xyflow/react';
 
 
 const circles = [
@@ -13,8 +10,7 @@ const circles = [
 ];
 
 
-
-
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
   const [selectedFile, setSelectedFile] = useState(null); 
   const [projects, setProjects] = useState([]);
@@ -28,7 +24,7 @@ export default () => {
     fetch(process.env.REACT_APP_GET_PROJECTS)
     .then(response => response.json()) 
     .then(data => { 
-      if (data.status == 0){
+      if (data.status === 0){
         setProjects(data.projects); 
       }
     })

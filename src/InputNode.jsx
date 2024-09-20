@@ -14,7 +14,7 @@ function InputNode({ id, data }: NodeProps<Node<{ text: string }>>) {
 
   
   var options = ""
-  if ( IoPorts.length == 0 ) {
+  if ( IoPorts.length === 0 ) {
     return;
   } else {
     options = IoPorts.in_ports.map((port) => (

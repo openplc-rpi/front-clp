@@ -3,7 +3,6 @@ import {
   ReactFlow,
   ReactFlowProvider,
   addEdge,
-  Position,
   useNodesState,
   useEdgesState,
   Controls,
@@ -60,7 +59,7 @@ const DnDFlow = () => {
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge({ ...params, animated: true, markerEnd: { type: MarkerType.ArrowClosed } }, eds)),
-    [],
+    [setEdges],
   );
 
   const onSave = useCallback(() => {
@@ -75,16 +74,16 @@ const DnDFlow = () => {
     console.log('run');
     const flow = rfInstance.toObject();
     console.log(flow);
-  });
+  }, [rfInstance]);
 
   const onClear = useCallback(() => {
     setNodes([]);
     setEdges([]);
-  });
+  }, [setEdges, setNodes]);
 
   const onDelete = useCallback(() => {
     deleteElements({ nodes: selectedNodes });
-  });
+  }, [deleteElements, selectedNodes]);
 
   const onDragOver = useCallback((event) => {
     event.preventDefault();
@@ -133,7 +132,7 @@ const DnDFlow = () => {
 
       setNodes((nds) => nds.concat(newNode));
     },
-    [screenToFlowPosition],
+    [screenToFlowPosition, setNodes, getNodes],
   );
 
   const onChange = useCallback(({ nodes, edges }) => {
@@ -155,7 +154,7 @@ const DnDFlow = () => {
       fetch(process.env.REACT_APP_GET_PROJECTS+'?'+ params)
         .then(response => response.json())
         .then(data => {
-          if (data.status == 0) {
+          if (data.status === 0) {
             const { x = 0, y = 0, zoom = 1 } = data.file_content.viewport;
             setNodes(data.file_content.nodes || []);
             setEdges(data.file_content.edges || []);
@@ -173,12 +172,12 @@ const DnDFlow = () => {
     return () => {
       window.removeEventListener('loadProject', handleUpdateEditorView);
     };
-  }, []);  
+  }, [setEdges, setNodes, setViewport]);  
 
 
   return (
     <div className="dndflow">
-      {error != "" && (
+      {error !== "" && (
         <div className="error-bar">
           {error}
         </div>
@@ -211,6 +210,7 @@ const DnDFlow = () => {
   );
 };
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => (
   <ReactFlowProvider>
     <DnDFlow />
