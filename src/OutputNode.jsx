@@ -6,7 +6,7 @@ function OutputNode({ id, data }: NodeProps<Node<{ text: string }>>) {
   const [IoPorts, setIoPorts] = useState([]);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_SERVER_ADDR+process.env.REACT_APP_GET_PORTS)
+    fetch(process.env.REACT_APP_GET_PORTS)
     .then(response => response.json()) 
     .then(data => {setIoPorts(data);})
   }, []);

@@ -152,7 +152,7 @@ const DnDFlow = () => {
         
       });
 
-      fetch(process.env.REACT_APP_SERVER_ADDR+process.env.REACT_APP_GET_PROJECTS+'?'+ params)
+      fetch(process.env.REACT_APP_GET_PROJECTS+'?'+ params)
         .then(response => response.json())
         .then(data => {
           if (data.status == 0) {

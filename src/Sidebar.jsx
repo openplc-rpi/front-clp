@@ -25,7 +25,7 @@ export default () => {
   };
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_SERVER_ADDR+process.env.REACT_APP_GET_PROJECTS)
+    fetch(process.env.REACT_APP_GET_PROJECTS)
     .then(response => response.json()) 
     .then(data => { 
       if (data.status == 0){
