@@ -148,18 +148,17 @@ const DnDFlow = () => {
 
       const params = new URLSearchParams({
         project_name: event.detail,
-        
       });
 
       fetch(process.env.REACT_APP_GET_PROJECTS+'?'+ params)
         .then(response => response.json())
         .then(data => {
           if (data.status === 0) {
-            const { x = 0, y = 0, zoom = 1 } = data.file_content.viewport;
-            setNodes(data.file_content.nodes || []);
-            setEdges(data.file_content.edges || []);
+            const { x = 0, y = 0, zoom = 1 } = data.flowchart.viewport;
+            setNodes(data.flowchart.nodes || []);
+            setEdges(data.flowchart.edges || []);
             setViewport({ x, y, zoom });
-            id = data.file_content.nodes.length;
+            id = data.flowchart.nodes.length;
           }else{
             triggerError(data.error_description);
           }
