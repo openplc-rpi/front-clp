@@ -90,14 +90,13 @@ const DnDFlow = () => {
   });
 
   const onRun = useCallback(() => {
-    console.log('run');
     const flow = rfInstance.toObject();
-    console.log(flow);
   }, [rfInstance]);
 
   const onClear = useCallback(() => {
     setNodes([]);
     setEdges([]);
+    id = 0;
   }, [setEdges, setNodes]);
 
   const onDelete = useCallback(() => {

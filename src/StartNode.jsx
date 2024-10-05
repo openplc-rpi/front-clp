@@ -22,7 +22,7 @@ function StartNode({ id, data }: NodeProps<Node<{ text: string }>>) {
       }}
     >
     <div>Start</div>
-     <Handle type="source" position={Position.Right} style={{backgroundColor: 'blue'}}/>
+     <Handle id="out" type="source" position={Position.Right} style={{backgroundColor: 'blue'}}/>
     </div>
   );
 }

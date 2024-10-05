@@ -21,7 +21,7 @@ function EndNode({ id, data }: NodeProps<Node<{ text: string }>>) {
       }}
     >
     <div>End</div>
-     <Handle type="target" position={Position.Left} style={{ backgroundColor: 'yellow'}}/>
+     <Handle id="in" type="target" position={Position.Left} style={{ backgroundColor: 'yellow'}}/>
     </div>
   );
 }
