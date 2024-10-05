@@ -65,10 +65,29 @@ const DnDFlow = () => {
   const onSave = useCallback(() => {
     if (rfInstance) {
       const flow = rfInstance.toObject();
-      localStorage.setItem(flowKey, JSON.stringify(flow));
-      console.log(flow)
+
+      const fileName = window.prompt('Nome do arquivo (.flow):', 'untilted.flow');
+
+      if (fileName === null) {
+        return;
+      }
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        }, 
+        'body': JSON.stringify({ 'project_name': fileName, 'flowchart': flow })
+      };
+
+      fetch(process.env.REACT_APP_GET_PROJECTS, options)
+      .then(response => response.json()) 
+      .then(data => {
+        const event = new CustomEvent('listProjects', {detail: data.projects});
+        window.dispatchEvent(event);
+      });
     }
-  }, [rfInstance]);
+  });
 
   const onRun = useCallback(() => {
     console.log('run');

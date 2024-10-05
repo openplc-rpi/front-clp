@@ -20,6 +20,10 @@ export default () => {
     event.dataTransfer.effectAllowed = 'move';
   };
 
+  function handleListProjects(event) {
+    setProjects(event.detail);
+  }
+
   useEffect(() => {
     fetch(process.env.REACT_APP_GET_PROJECTS)
     .then(response => response.json()) 
@@ -28,6 +32,12 @@ export default () => {
         setProjects(data.projects); 
       }
     })
+
+    window.addEventListener('listProjects', handleListProjects);
+
+    return () => {
+      window.removeEventListener('listProjects', handleListProjects);
+    };
   }, []);
 
 
