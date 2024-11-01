@@ -23,6 +23,7 @@ import DecisionNode from './DecisionNode';
 import Operation from './Operation';
 import OutputNode from './OutputNode';
 import EndNode from './EndNode';
+import AndOr from './AndOr';
 import './index.css';
 
 const nodeTypes = {
@@ -31,7 +32,8 @@ const nodeTypes = {
   decision: DecisionNode,
   operation: Operation,
   outport: OutputNode,
-  end: EndNode
+  end: EndNode,
+  andor: AndOr
 };
 
 const flowKey = 'example-flow';

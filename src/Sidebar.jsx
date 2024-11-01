@@ -72,6 +72,10 @@ export default () => {
       out-port
       </div>
 
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'andor')} draggable>
+        and/or
+      </div>
+
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'end')} draggable>
         end
       </div>
