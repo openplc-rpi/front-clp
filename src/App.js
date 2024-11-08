@@ -10,9 +10,10 @@ import {
   Panel,
   MarkerType,
   useOnSelectionChange,
-  } from '@xyflow/react';
+} from '@xyflow/react';
+import { io } from 'socket.io-client';
 
-  
+
 
 
 import '@xyflow/react/dist/style.css';
@@ -39,6 +40,7 @@ const nodeTypes = {
 const flowKey = 'example-flow';
 let id = 0;
 const getId = () => `dndnode_${id++}`;
+const SERVER = 'http://localhost:5000';
 
 
 const DnDFlow = () => {
@@ -49,6 +51,28 @@ const DnDFlow = () => {
   const [rfInstance, setRfInstance] = useState(null);
   const { setViewport, getNodes, deleteElements, screenToFlowPosition } = useReactFlow();
   const [error, setError] = useState("");
+  const [socket, setSocket] = useState(null);
+  const [serverData, setServerData] = useState(null);
+
+  useEffect(() => {
+    const socket = io(SERVER, {});
+
+    socket.on('connect', () => {
+      console.log('Connected to WebSocket server');
+    });
+
+    socket.on('error', (errMsg) => {
+      triggerError(errMsg);
+    });
+    
+    socket.on('disconnect', () => {
+      console.log('Disconnected from WebSocket server');
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   /*  Function to trigger an error.*/
   const triggerError = (error_msg) => {
@@ -76,18 +100,18 @@ const DnDFlow = () => {
 
       const options = {
         method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        }, 
+        headers: { 
+          'Content-type': 'application/json' 
+        },
         'body': JSON.stringify({ 'project_name': fileName, 'flowchart': flow })
       };
 
       fetch(process.env.REACT_APP_GET_PROJECTS, options)
-      .then(response => response.json()) 
-      .then(data => {
-        const event = new CustomEvent('listProjects', {detail: data.projects});
-        window.dispatchEvent(event);
-      });
+        .then(response => response.json())
+        .then(data => {
+          const event = new CustomEvent('listProjects', {detail: data.projects});
+          window.dispatchEvent(event);
+        });
     }
   });
 
@@ -134,12 +158,12 @@ const DnDFlow = () => {
       if (flag) {
         return;
       }
-
+      
       // project was renamed to screenToFlowPosition
       // and you don't need to subtract the reactFlowBounds.left/top anymore
-      // details: https://reactflow.dev/whats-new/2023-11-10
-      const position = screenToFlowPosition({
-        x: event.clientX,
+      // details: https://reactflow.dev/whats-new/2023-11-10     
+      const position = screenToFlowPosition({ 
+        x: event.clientX, 
         y: event.clientY,
       });
 
@@ -157,16 +181,16 @@ const DnDFlow = () => {
 
   const onChange = useCallback(({ nodes, edges }) => {
     setSelectedNodes(nodes);    
-  }, []);  
+  }, []);
 
   useOnSelectionChange({
-    onChange,
-  });
+     onChange,
+    });
 
   useEffect(() => {
     const handleUpdateEditorView = (event) => {
 
-      const params = new URLSearchParams({
+      const params = new URLSearchParams({ 
         project_name: event.detail,
       });
 
@@ -183,15 +207,15 @@ const DnDFlow = () => {
             triggerError(data.error_description);
           }
         }
-      );    
+      );
     };
 
     window.addEventListener('loadProject', handleUpdateEditorView);
-  
+
     return () => {
       window.removeEventListener('loadProject', handleUpdateEditorView);
     };
-  }, [setEdges, setNodes, setViewport]);  
+  }, [setEdges, setNodes, setViewport]);
 
 
   return (
@@ -200,7 +224,7 @@ const DnDFlow = () => {
         <div className="error-bar">
           {error}
         </div>
-      )}      
+      )}
       <div className="reactflow-wrapper" ref={reactFlowWrapper}>
         <ReactFlow
           nodes={nodes}
