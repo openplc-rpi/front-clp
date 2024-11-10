@@ -61,10 +61,16 @@ const DnDFlow = () => {
       console.log('Connected to WebSocket server');
     });
 
-    socket.on('error', (errMsg) => {
-      triggerError(errMsg);
+    socket.on('json_data', (data) => {
+      const parsedData = JSON.parse(data);
+      setServerData(parsedData);
+      console.log('Received data:', parsedData);
     });
-    
+
+    socket.on('error', (errMsg) => {
+      console.error('WebSocket error:', errMsg);
+    });
+
     socket.on('disconnect', () => {
       console.log('Disconnected from WebSocket server');
     });
@@ -73,7 +79,7 @@ const DnDFlow = () => {
       socket.disconnect();
     };
   }, []);
-
+  
   /*  Function to trigger an error.*/
   const triggerError = (error_msg) => {
     setError(error_msg);
