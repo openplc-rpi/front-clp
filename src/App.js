@@ -42,6 +42,31 @@ let id = 0;
 const getId = () => `dndnode_${id++}`;
 const SERVER = 'http://localhost:5000';
 
+// Componente para exibir os dados recebidos
+const DataDisplay = ({ data }) => {
+  return (
+    <div style={{
+      position: 'absolute',
+      top: 490,
+      right: 280,
+      backgroundColor: '#f0f0f0',
+      padding: '10px',
+      borderRadius: '5px',
+      boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+      width: '200px',
+      zIndex: 1000
+    }}>
+      <h4>Data from Server</h4>
+      <ul style={{ listStyleType: 'none', padding: 0 }}>
+        {Object.entries(data).map(([key, value]) => (
+          <li key={key}>
+            <strong>{key}</strong>: {value}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 const DnDFlow = () => {
   const reactFlowWrapper = useRef(null);
@@ -52,7 +77,7 @@ const DnDFlow = () => {
   const { setViewport, getNodes, deleteElements, screenToFlowPosition } = useReactFlow();
   const [error, setError] = useState("");
   const [socket, setSocket] = useState(null);
-  const [serverData, setServerData] = useState(null);
+  const [serverData, setServerData] = useState({});
 
   useEffect(() => {
     const socket = io(SERVER, {});
@@ -75,11 +100,13 @@ const DnDFlow = () => {
       console.log('Disconnected from WebSocket server');
     });
 
+    setSocket(socket);
+
     return () => {
       socket.disconnect();
     };
   }, []);
-  
+
   /*  Function to trigger an error.*/
   const triggerError = (error_msg) => {
     setError(error_msg);
@@ -213,7 +240,7 @@ const DnDFlow = () => {
             triggerError(data.error_description);
           }
         }
-      );
+      );    
     };
 
     window.addEventListener('loadProject', handleUpdateEditorView);
@@ -255,6 +282,7 @@ const DnDFlow = () => {
         </ReactFlow>
       </div>
       <Sidebar />
+      <DataDisplay data={serverData} />
     </div>
   );
 };
