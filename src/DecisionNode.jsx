@@ -6,10 +6,11 @@ function DecisionNode({ id, data }: NodeProps<Node<{ text: string }>>) {
   const { updateNodeData } = useReactFlow();
 
   useEffect(() => {
-    if (!data.signal) {
+    if (! ('signal' in data)) {
       updateNodeData(id, { signal: "==" });
     }
-    if (!data.text) {
+
+    if (!('text' in data)) {
       updateNodeData(id, { text: "0" });
     }
   }, [data, id]);  
@@ -48,8 +49,7 @@ function DecisionNode({ id, data }: NodeProps<Node<{ text: string }>>) {
         </div>
       </center>
       <Handle id="in" type="target" position={Position.Left} style={{ backgroundColor: 'yellow'}}/>
-      <Handle id="true" type="source" position={Position.Right}  style={{ top: 10, backgroundColor: 'green'}}/>
-      <Handle id="false" type="source" position={Position.Right} style={{ bottom: 5, top: 'auto', backgroundColor: 'red'}}/>
+      <Handle id="out" type="source" position={Position.Right}  style={{ backgroundColor: 'blue'}}/>
     </div>
   );
 }
