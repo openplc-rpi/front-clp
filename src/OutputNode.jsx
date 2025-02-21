@@ -11,6 +11,13 @@ function OutputNode({ id, data }: NodeProps<Node<{ text: string }>>) {
     .then(data => {setIoPorts(data);})
   }, []);
 
+  useEffect(() => { 
+    if (!data.text && IoPorts?.out_ports?.length > 0) {
+      updateNodeData(id, { text: IoPorts.out_ports[0] });
+    }
+  }, [IoPorts, id]);
+
+
   
   var options = ""
   if ( IoPorts.length === 0 ) {

@@ -1,8 +1,18 @@
+import React, { useEffect } from 'react';
 import { memo } from 'react';
 import { Position, NodeProps, Handle, useReactFlow, Node } from '@xyflow/react';
 
 function DecisionNode({ id, data }: NodeProps<Node<{ text: string }>>) {
   const { updateNodeData } = useReactFlow();
+
+  useEffect(() => {
+    if (!data.signal) {
+      updateNodeData(id, { signal: "==" });
+    }
+    if (!data.text) {
+      updateNodeData(id, { text: "0" });
+    }
+  }, [data, id]);  
 
   return (
     <div

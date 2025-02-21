@@ -1,8 +1,18 @@
+import React, { useEffect } from 'react';
 import { memo } from 'react';
 import { Position, NodeProps, Handle, useReactFlow, Node } from '@xyflow/react';
 
 function Operation({ id, data }: NodeProps<Node<{ text: string }>>) {
   const { updateNodeData } = useReactFlow();
+
+  useEffect(() => {
+    if (!data.operation) {
+      updateNodeData(id, { operation: "-" });
+    }
+    if (!data.text) {
+      updateNodeData(id, { text: "0" });
+    }
+  }, [data, id]);  
 
   return (
     <div
@@ -22,7 +32,7 @@ function Operation({ id, data }: NodeProps<Node<{ text: string }>>) {
       <div><center>Operation</center></div>
       <center>
         <div style={{ marginTop: 5, display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <select id="operation_signal" value={data.signal || '*'} name="compare_signal" style={{ display: 'block', width: 40, fontSize: 10 }} onChange={(evt) => updateNodeData(id, { signal: evt.target.value })}>
+          <select id="operation_signal" value={data.operation || '*'} name="compare_signal" style={{ display: 'block', width: 40, fontSize: 10 }} onChange={(evt) => updateNodeData(id, { operation: evt.target.value })}>
             <option value="-">-</option>
             <option value="+">+</option>
             <option value="*">*</option>

@@ -1,5 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 import { Position, NodeProps, Handle, useReactFlow, Node } from '@xyflow/react';
+import { use } from 'react';
 
 
 function InputNode({ id, data }: NodeProps<Node<{ text: string }>>) {
@@ -11,6 +12,14 @@ function InputNode({ id, data }: NodeProps<Node<{ text: string }>>) {
     .then(response => response.json()) 
     .then(data => {setIoPorts(data);})
   }, []);
+
+  useEffect(() => { 
+    console.log(IoPorts, data);
+
+    if (!data.text && IoPorts?.in_ports?.length > 0) {
+      updateNodeData(id, { text: IoPorts.in_ports[0] });
+    }
+  }, [IoPorts, id]);
 
   
   var options = ""
