@@ -6,10 +6,10 @@ function Operation({ id, data }: NodeProps<Node<{ text: string }>>) {
   const { updateNodeData } = useReactFlow();
 
   useEffect(() => {
-    if (!data.operation) {
+    if (!('operation' in data)) {
       updateNodeData(id, { operation: "-" });
     }
-    if (!data.text) {
+    if (!('text' in data)) {
       updateNodeData(id, { text: "0" });
     }
   }, [data, id]);  
