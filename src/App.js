@@ -26,6 +26,7 @@ import OutputNode from './OutputNode';
 import EndNode from './EndNode';
 import AndOr from './AndOr';
 import Switch from './Switch';
+import Equation from './Equation';
 import './index.css';
 
 const nodeTypes = {
@@ -36,7 +37,8 @@ const nodeTypes = {
   outport: OutputNode,
   end: EndNode,
   andor: AndOr,
-  switch: Switch
+  switch: Switch,
+  equation: Equation,
 };
 
 const flowKey = 'example-flow';

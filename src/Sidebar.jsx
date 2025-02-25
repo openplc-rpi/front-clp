@@ -80,6 +80,9 @@ export default () => {
         switch
       </div>
 
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'equation')} draggable>
+        Equation
+      </div>
 
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'end')} draggable>
         end
