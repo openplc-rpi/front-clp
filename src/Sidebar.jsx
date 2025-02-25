@@ -76,9 +76,16 @@ export default () => {
         and/or
       </div>
 
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'switch')} draggable>
+        switch
+      </div>
+
+
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'end')} draggable>
         end
       </div>
+
+
 
       <div className="square">
         <h3 className="title">Legenda</h3>

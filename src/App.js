@@ -11,7 +11,7 @@ import {
   MarkerType,
   useOnSelectionChange,
 } from '@xyflow/react';
-import { io } from 'socket.io-client';
+//import { io } from 'socket.io-client';
 
 
 
@@ -25,6 +25,7 @@ import Operation from './Operation';
 import OutputNode from './OutputNode';
 import EndNode from './EndNode';
 import AndOr from './AndOr';
+import Switch from './Switch';
 import './index.css';
 
 const nodeTypes = {
@@ -34,7 +35,8 @@ const nodeTypes = {
   operation: Operation,
   outport: OutputNode,
   end: EndNode,
-  andor: AndOr
+  andor: AndOr,
+  switch: Switch
 };
 
 const flowKey = 'example-flow';
@@ -73,6 +75,7 @@ const DnDFlow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [selectedNodes, setSelectedNodes] = useState([]);
+  const [selectedEdges, setSelectedEdges] = useState([]);
   const [rfInstance, setRfInstance] = useState(null);
   const { setViewport, getNodes, deleteElements, screenToFlowPosition } = useReactFlow();
   const [error, setError] = useState("");
@@ -80,7 +83,7 @@ const DnDFlow = () => {
   const [serverData, setServerData] = useState({});
 
   useEffect(() => {
-    const socket = io(SERVER, {});
+    /*const socket = io(SERVER, {});
 
     socket.on('connect', () => {
       console.log('Connected to WebSocket server');
@@ -104,7 +107,7 @@ const DnDFlow = () => {
 
     return () => {
       socket.disconnect();
-    };
+    };*/
   }, []);
 
   /*  Function to trigger an error.*/
@@ -160,7 +163,8 @@ const DnDFlow = () => {
 
   const onDelete = useCallback(() => {
     deleteElements({ nodes: selectedNodes });
-  }, [deleteElements, selectedNodes]);
+    deleteElements( { edges: selectedEdges });
+  }, [deleteElements, selectedNodes, selectedEdges]);
 
   const onDragOver = useCallback((event) => {
     event.preventDefault();
@@ -214,6 +218,7 @@ const DnDFlow = () => {
 
   const onChange = useCallback(({ nodes, edges }) => {
     setSelectedNodes(nodes);    
+    setSelectedEdges(edges);
   }, []);
 
   useOnSelectionChange({
@@ -282,7 +287,7 @@ const DnDFlow = () => {
         </ReactFlow>
       </div>
       <Sidebar />
-      <DataDisplay data={serverData} />
+      { /*<DataDisplay data={serverData} />*/ }
     </div>
   );
 };
