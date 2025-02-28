@@ -11,8 +11,7 @@ const circles = [
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default () => {
-  const [selectedFile, setSelectedFile] = useState(null); 
+export default ({selectedFile, setSelectedFile}) => {
   const [projects, setProjects] = useState([]);
 
   const onDragStart = (event, nodeType) => {

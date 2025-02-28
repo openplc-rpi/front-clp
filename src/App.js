@@ -11,7 +11,7 @@ import {
   MarkerType,
   useOnSelectionChange,
 } from '@xyflow/react';
-//import { io } from 'socket.io-client';
+import { io } from 'socket.io-client';
 
 
 
@@ -83,18 +83,37 @@ const DnDFlow = () => {
   const [error, setError] = useState("");
   const [socket, setSocket] = useState(null);
   const [serverData, setServerData] = useState({});
+  const [selectedFile, setSelectedFile] = useState('');
+  const [state, setState] = useState('start');  
 
   useEffect(() => {
-    /*const socket = io(SERVER, {});
+    const socket = io(SERVER, {});
 
     socket.on('connect', () => {
       console.log('Connected to WebSocket server');
     });
 
-    socket.on('json_data', (data) => {
-      const parsedData = JSON.parse(data);
-      setServerData(parsedData);
-      console.log('Received data:', parsedData);
+    socket.on('update', (data) => {
+      setEdges((eds) =>
+        eds.map((edge) => {
+          const currentNodes = getNodes();
+
+          const targetNode = currentNodes.find((node) => node.id === edge.target);
+
+          if (targetNode && targetNode.type === 'end') {
+            return { ...edge, label: '' };
+          }
+
+          const match = data.find(([edgePair]) =>
+            edge.source === edgePair[0] && edge.target === edgePair[1]
+          );
+  
+          return match
+            ? { ...edge, label: match[1] !== null ? match[1].toString() : '' }
+            : edge;
+        })
+      );      
+
     });
 
     socket.on('error', (errMsg) => {
@@ -109,7 +128,7 @@ const DnDFlow = () => {
 
     return () => {
       socket.disconnect();
-    };*/
+    };
   }, []);
 
   /*  Function to trigger an error.*/
@@ -154,9 +173,28 @@ const DnDFlow = () => {
   });
 
   const onRun = useCallback(() => {
-    const flow = rfInstance.toObject();
-  }, [rfInstance]);
+    if (state === 'start') {
+      setState('stop');
+    }
+    else {
+      setState('start');
+    }
+    const options = {
+      method: 'PUT',
+      headers: { 
+        'Content-type': 'application/json' 
+      },
+      'body': JSON.stringify({ 'state': state, 'filename': selectedFile })
+    };
 
+    fetch(process.env.REACT_APP_GET_START, options)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      });
+  })
+
+    
   const onClear = useCallback(() => {
     setNodes([]);
     setEdges([]);
@@ -283,12 +321,12 @@ const DnDFlow = () => {
             <button style={{ marginRight: '10px' }} onClick={onDelete}>delete</button>
             <button onClick={onClear}>clear</button>
             <button style={{ marginRight: '10px' }} onClick={onSave}>save</button>
-            <button onClick={onRun}>run</button>
+            <button onClick={onRun}>{state}</button>
 
           </Panel>
         </ReactFlow>
       </div>
-      <Sidebar />
+      <Sidebar selectedFile={selectedFile} setSelectedFile={setSelectedFile} />
       { /*<DataDisplay data={serverData} />*/ }
     </div>
   );
