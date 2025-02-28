@@ -11,7 +11,7 @@ const circles = [
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default ({selectedFile, setSelectedFile}) => {
+export default ({selectedFile, setSelectedFile, selectionEnabled}) => {
   const [projects, setProjects] = useState([]);
 
   const onDragStart = (event, nodeType) => {
@@ -111,7 +111,9 @@ export default ({selectedFile, setSelectedFile}) => {
             <li 
               className={`file-item ${selectedFile === file ? 'selected' : ''}`}
               key={index} 
-              onClick={() => handleItemClick(file)}>
+              onClick={selectionEnabled ? () => handleItemClick(file) : null}
+              style={{ pointerEvents: selectionEnabled ? 'auto' : 'none' }}              
+            >
                 {file}
             </li>
           ))}

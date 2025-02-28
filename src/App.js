@@ -41,36 +41,10 @@ const nodeTypes = {
   equation: Equation,
 };
 
-const flowKey = 'example-flow';
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 const SERVER = 'http://localhost:5000';
 
-// Componente para exibir os dados recebidos
-const DataDisplay = ({ data }) => {
-  return (
-    <div style={{
-      position: 'absolute',
-      top: 490,
-      right: 280,
-      backgroundColor: '#f0f0f0',
-      padding: '10px',
-      borderRadius: '5px',
-      boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-      width: '200px',
-      zIndex: 1000
-    }}>
-      <h4>Data from Server</h4>
-      <ul style={{ listStyleType: 'none', padding: 0 }}>
-        {Object.entries(data).map(([key, value]) => (
-          <li key={key}>
-            <strong>{key}</strong>: {value}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
 
 const DnDFlow = () => {
   const reactFlowWrapper = useRef(null);
@@ -82,9 +56,9 @@ const DnDFlow = () => {
   const { setViewport, getNodes, deleteElements, screenToFlowPosition } = useReactFlow();
   const [error, setError] = useState("");
   const [socket, setSocket] = useState(null);
-  const [serverData, setServerData] = useState({});
-  const [selectedFile, setSelectedFile] = useState('');
+    const [selectedFile, setSelectedFile] = useState('');
   const [state, setState] = useState('start');  
+  const [selectionEnabled, setSelectionEnabled] = useState(true);
 
   useEffect(() => {
     const socket = io(SERVER, {});
@@ -149,11 +123,13 @@ const DnDFlow = () => {
     if (rfInstance) {
       const flow = rfInstance.toObject();
 
-      const fileName = window.prompt('Nome do arquivo (.flow):', 'untilted.flow');
+      const fileName = window.prompt('Nome do arquivo (.flow):', selectedFile != '' ? selectedFile : 'untilted.flow');
 
       if (fileName === null) {
         return;
       }
+
+      setSelectedFile(fileName);
 
       const options = {
         method: 'POST',
@@ -175,9 +151,11 @@ const DnDFlow = () => {
   const onRun = useCallback(() => {
     if (state === 'start') {
       setState('stop');
+      setSelectionEnabled(false);
     }
     else {
       setState('start');
+      setSelectionEnabled(true);
     }
     const options = {
       method: 'PUT',
@@ -199,6 +177,8 @@ const DnDFlow = () => {
     setNodes([]);
     setEdges([]);
     id = 0;
+
+    setSelectedFile('');
   }, [setEdges, setNodes]);
 
   const onDelete = useCallback(() => {
@@ -318,16 +298,16 @@ const DnDFlow = () => {
         >
           <Controls />
           <Panel position="top-right">
-            <button style={{ marginRight: '10px' }} onClick={onDelete}>delete</button>
-            <button onClick={onClear}>clear</button>
-            <button style={{ marginRight: '10px' }} onClick={onSave}>save</button>
-            <button onClick={onRun}>{state}</button>
+            <button style={{ marginRight: '10px' }} onClick={onDelete} disabled={!selectionEnabled}>delete</button>
+            <button onClick={onClear} disabled={!selectionEnabled}>clear</button>
+            <button style={{ marginRight: '10px' }} onClick={onSave} disabled={!selectionEnabled}>save</button>
+            <button onClick={onRun} style={{ backgroundColor: state !== 'start' ? 'red' : 'green' }}>{state}</button>
+
 
           </Panel>
         </ReactFlow>
       </div>
-      <Sidebar selectedFile={selectedFile} setSelectedFile={setSelectedFile} />
-      { /*<DataDisplay data={serverData} />*/ }
+      <Sidebar selectedFile={selectedFile} setSelectedFile={setSelectedFile} selectionEnabled={selectionEnabled}/>
     </div>
   );
 };
