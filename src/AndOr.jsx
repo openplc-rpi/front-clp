@@ -32,12 +32,13 @@ function AndOr({ id, data }: NodeProps<Node<{ text: string }>>) {
           <select id="logic_operation" value={data.signal || "and"} name="logic_operation" style={{ display: 'block', width: 40, fontSize: 10 }} onChange={(evt) => updateNodeData(id, { signal: evt.target.value })}>
             <option value="and">and</option>
             <option value="or">or</option>
+            <option value="xor">xor</option>
           </select>             
         </div>
       </center>
       <Handle id="in1" type="target" position={Position.Left} style={{ top:10, backgroundColor: 'yellow'}}/>
       <Handle id="in2" type="target" position={Position.Left}  style={{ bottom: 5, top: 'auto', backgroundColor: 'yellow'}}/>
-      <Handle id="output" type="source" position={Position.Right} style={{backgroundColor: 'red'}}/>
+      <Handle id="output" type="source" position={Position.Right} style={{backgroundColor: 'blue'}}/>
     </div>
   );
 }

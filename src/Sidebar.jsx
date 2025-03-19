@@ -4,9 +4,7 @@ import './styles.css';
 
 const circles = [
   { color: 'yellow', label: 'Sinal de Entrada' },
-  { color: 'blue', label: 'Sinal de Saída' },
-  { color: 'green', label: 'Ativo se Verdadeiro' },
-  { color: 'red', label: 'Ativo se Falso' }
+  { color: 'blue', label: 'Sinal de Saída' }
 ];
 
 
