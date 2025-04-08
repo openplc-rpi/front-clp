@@ -43,7 +43,7 @@ const nodeTypes = {
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
-const SERVER = 'http://localhost:5000';
+
 
 
 const DnDFlow = () => {
@@ -61,7 +61,7 @@ const DnDFlow = () => {
   const [selectionEnabled, setSelectionEnabled] = useState(true);
 
   useEffect(() => {
-    const socket = io(SERVER, {});
+    const socket = io(process.env.REACT_APP_SOCKETIO_URL, {});
 
     socket.on('connect', () => {
       console.log('Connected to WebSocket server');
