@@ -37,16 +37,11 @@ function Operation({ id, data }: NodeProps<Node<{ text: string }>>) {
             <option value="+">+</option>
             <option value="*">*</option>
             <option value="/">/</option>
-            <option value="!">!</option>
           </select>             
-          <input
-            onChange={(evt) => updateNodeData(id, { text: evt.target.value })}
-            value={data.text || ''}
-            style={{ display: 'block', width: 30, fontSize: 8 }}
-          />
         </div>
       </center>
-      <Handle in="in" type="target" position={Position.Left} style={{ backgroundColor: 'yellow'}}/>
+      <Handle id="in1" type="target" position={Position.Left} style={{ top:10, backgroundColor: 'yellow'}}/>
+      <Handle id="in2" type="target" position={Position.Left}  style={{ bottom: 5, top: 'auto', backgroundColor: 'yellow'}}/>
       <Handle id="out" type="source" position={Position.Right} style={{ backgroundColor: 'blue'}}/>
     </div>
   );
