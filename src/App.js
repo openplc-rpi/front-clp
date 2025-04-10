@@ -27,6 +27,7 @@ import EndNode from './EndNode';
 import AndOr from './AndOr';
 import Switch from './Switch';
 import Equation from './Equation';
+import ValueOf from './ValueOf';
 import './index.css';
 
 const nodeTypes = {
@@ -39,6 +40,7 @@ const nodeTypes = {
   andor: AndOr,
   switch: Switch,
   equation: Equation,
+  valueof: ValueOf
 };
 
 let id = 0;

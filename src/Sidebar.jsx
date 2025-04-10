@@ -81,6 +81,10 @@ export default ({selectedFile, setSelectedFile, selectionEnabled}) => {
         Equation
       </div>
 
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'valueof')} draggable>
+        Value of
+      </div>
+
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'end')} draggable>
         end
       </div>
