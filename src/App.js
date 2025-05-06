@@ -28,6 +28,8 @@ import AndOr from './AndOr';
 import Switch from './Switch';
 import Equation from './Equation';
 import ValueOf from './ValueOf';
+import ProporcionalNode from './ProporcionalNode';
+import DerivativeNode from './DerivadaNode';
 import './index.css';
 
 const nodeTypes = {
@@ -40,7 +42,9 @@ const nodeTypes = {
   andor: AndOr,
   switch: Switch,
   equation: Equation,
-  valueof: ValueOf
+  valueof: ValueOf,
+  Proporcional: ProporcionalNode,
+  Derivative: DerivativeNode
 };
 
 let id = 0;

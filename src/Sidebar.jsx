@@ -89,6 +89,17 @@ export default ({selectedFile, setSelectedFile, selectionEnabled}) => {
         end
       </div>
 
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'Proporcional')} draggable>
+        Proporcional
+      </div>
+
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'Derivative')} draggable>
+        Derivative
+      </div>
+    
+    
+    
+
 
 
       <div className="square">
