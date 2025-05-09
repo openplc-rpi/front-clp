@@ -49,6 +49,7 @@ export default ({selectedFile, setSelectedFile, selectionEnabled}) => {
     <aside>
       <div className="description">Arraste o dispositivo desejado para a esquerda.</div>
 
+      <div className="dndgrid">
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'start')} draggable>
         Start
       </div>
@@ -96,7 +97,7 @@ export default ({selectedFile, setSelectedFile, selectionEnabled}) => {
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'Derivative')} draggable>
         Derivative
       </div>
-    
+    </div>
     
     
 
@@ -117,6 +118,7 @@ export default ({selectedFile, setSelectedFile, selectionEnabled}) => {
         </div>      
       </div>
 
+      
       <div className="listview">
         <h3 className="title">Projetos</h3>
         <ul className="file-list">

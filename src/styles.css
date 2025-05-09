@@ -55,6 +55,12 @@ html, body, #root {
   background-color: white;
   padding: 10px;
   margin-top: 20px;
+
+  max-height: 300px; /* ou a altura que você desejar */
+  overflow-y: auto;  /* adiciona scroll vertical se necessário */
+  border: 1px solid #ccc; /* opcional: só para visual */
+  
+
 }
 
 .listview .title {
@@ -87,3 +93,17 @@ html, body, #root {
   color: #000;
 }
 
+.dndgrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* duas colunas com largura igual */
+  gap: 8px; /* espaço entre os elementos */
+}
+
+.dndnode {
+  padding: 10px;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  text-align: center;
+  cursor: grab;
+  border-radius: 4px;
+}
