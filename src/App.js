@@ -31,6 +31,7 @@ import ValueOf from './ValueOf';
 import ProporcionalNode from './ProporcionalNode';
 import DerivativeNode from './DerivadaNode';
 import IntegralNode from './IntegralNode';
+import PID from './PIDNode';
 import './index.css';
 
 const nodeTypes = {
@@ -46,7 +47,8 @@ const nodeTypes = {
   valueof: ValueOf,
   Proporcional: ProporcionalNode,
   Derivative: DerivativeNode,
-  Integral: IntegralNode
+  Integral: IntegralNode,
+  pid: PID
 };
 
 let id = 0;

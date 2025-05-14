@@ -101,6 +101,11 @@ export default ({selectedFile, setSelectedFile, selectionEnabled}) => {
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'Integral')} draggable>
         Integral
       </div>
+
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'pid')} draggable>
+        PID
+      </div>
+
     </div>
     
     
