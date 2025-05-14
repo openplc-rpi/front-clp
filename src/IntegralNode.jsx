@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { Position, NodeProps, Handle, Node, useReactFlow } from '@xyflow/react';
 import './index.css';
 
-function DerivativeNode({ id, data }: NodeProps<Node<{ text: string }>>) {
+function IntegralNode({ id, data }: NodeProps<Node<{ text: string }>>) {
   const { updateNodeData } = useReactFlow();
 
   // Garante que a propriedade "text" exista no data (inicializa com vazio, se não existir)
@@ -31,19 +31,19 @@ function DerivativeNode({ id, data }: NodeProps<Node<{ text: string }>>) {
         border: '1px solid #000',
       }}
     >
-      <div><center>Derivative</center></div>
+      <div><center>Integral</center></div>
       <div style={{ marginTop: 5, display: 'flex', alignItems: 'center', gap: '5px' }}>
-        <span style={{ fontSize: 10 }}>kd :</span>
+        <span style={{ fontSize: 10 }}>ki :</span>
         <input
           onChange={(evt) => updateNodeData(id, { text: evt.target.value })}
           value={data.text || ''}
           style={{ width: 40, fontSize: 10 }}
         />
       </div>
-      <Handle id="D_in" type="target" position={Position.Left} style={{ backgroundColor: 'yellow' }} />
-      <Handle id="D_out" type="source" position={Position.Right} style={{ backgroundColor: 'blue' }} />
+      <Handle id="I_in" type="target" position={Position.Left} style={{ backgroundColor: 'yellow' }} />
+      <Handle id="I_out" type="source" position={Position.Right} style={{ backgroundColor: 'blue' }} />
     </div>
   );
 }
 
-export default memo(DerivativeNode);
+export default memo(IntegralNode);

@@ -30,6 +30,7 @@ import Equation from './Equation';
 import ValueOf from './ValueOf';
 import ProporcionalNode from './ProporcionalNode';
 import DerivativeNode from './DerivadaNode';
+import IntegralNode from './IntegralNode';
 import './index.css';
 
 const nodeTypes = {
@@ -44,7 +45,8 @@ const nodeTypes = {
   equation: Equation,
   valueof: ValueOf,
   Proporcional: ProporcionalNode,
-  Derivative: DerivativeNode
+  Derivative: DerivativeNode,
+  Integral: IntegralNode
 };
 
 let id = 0;
