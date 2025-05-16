@@ -29,6 +29,7 @@ import Switch from './Switch';
 import Equation from './Equation';
 import ValueOf from './ValueOf';
 import PID from './PIDNode';
+import ReferenceValue from './ReferenceValue';
 import './index.css';
 
 const nodeTypes = {
@@ -42,7 +43,8 @@ const nodeTypes = {
   switch: Switch,
   equation: Equation,
   valueof: ValueOf,
-  pid: PID
+  pid: PID, 
+  reference: ReferenceValue,
 };
 
 let id = 0;

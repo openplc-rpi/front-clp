@@ -86,6 +86,10 @@ export default ({selectedFile, setSelectedFile, selectionEnabled}) => {
         Value of
       </div>
 
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'reference')} draggable>
+        Reference
+      </div>
+
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'end')} draggable>
         end
       </div>
