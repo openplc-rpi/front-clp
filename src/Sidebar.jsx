@@ -3,8 +3,8 @@ import './styles.css';
 
 
 const circles = [
-  { color: 'yellow', label: 'Sinal de Entrada' },
-  { color: 'blue', label: 'Sinal de Saída' }
+  { color: 'yellow', label: 'Input Signal' },
+  { color: 'blue', label: 'Output Signal' }
 ];
 
 
@@ -47,7 +47,7 @@ export default ({selectedFile, setSelectedFile, selectionEnabled}) => {
 
   return (
     <aside>
-      <div className="description">Arraste o dispositivo desejado para a esquerda.</div>
+      <div className="description">Drag/Drop the components.</div>
 
       <div className="dndgrid">
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'start')} draggable>
@@ -111,7 +111,7 @@ export default ({selectedFile, setSelectedFile, selectionEnabled}) => {
 
 
       <div className="square">
-        <h3 className="title">Legenda</h3>
+        <h3 className="title">Caption</h3>
         <div className="circle-grid">
           {circles.map((circle, index) => (
             <div key={index} className="circle-container">
@@ -127,7 +127,7 @@ export default ({selectedFile, setSelectedFile, selectionEnabled}) => {
 
       
       <div className="listview">
-        <h3 className="title">Projetos</h3>
+        <h3 className="title">Saved Projects</h3>
         <ul className="file-list">
           {projects.map((file, index) => (
             <li 
