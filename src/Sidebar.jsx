@@ -97,6 +97,12 @@ export default ({selectedFile, setSelectedFile, selectionEnabled}) => {
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'pid')} draggable>
         PID
       </div>
+      
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'graph')} draggable>
+        Graph
+      </div>
+
+ 
 
     </div>
     

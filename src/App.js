@@ -30,6 +30,7 @@ import Equation from './Equation';
 import ValueOf from './ValueOf';
 import PID from './PIDNode';
 import ReferenceValue from './ReferenceValue';
+import GraphNode from './GraphNode';
 import './index.css';
 
 const nodeTypes = {
@@ -44,6 +45,7 @@ const nodeTypes = {
   equation: Equation,
   valueof: ValueOf,
   pid: PID, 
+  graph:GraphNode,
   reference: ReferenceValue,
 };
 
@@ -68,7 +70,8 @@ const DnDFlow = () => {
 
   useEffect(() => {
     const socket = io(process.env.REACT_APP_SOCKETIO_URL, {});
-
+    window.socket = socket;    // ← exponha aqui
+    
     socket.on('connect', () => {
       console.log('Connected to WebSocket server');
     });
